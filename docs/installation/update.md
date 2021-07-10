@@ -7,7 +7,7 @@
   feature](#importing-sql-from-the-exporter-feature)
   - [Importing SQL into Heroku](#importing-sql-into-heroku)
     - [WARNING: This will delete your current database. Only use on
-      fresh installations, or if you know what you're
+      fresh installations, or if you know what you’re
       doing.](#warning-this-will-delete-your-current-database-only-use-on-fresh-installations-or-if-you-know-what-youre-doing)
 
 ## Generic instructions
@@ -54,7 +54,7 @@ you will run into problems.
 
 The `monica:update` command will run migrations scripts for database,
 and flush all cache for config, route, and view, as an optimization
-process. It's easier than run every need command independently.
+process. It’s easier than run every need command independently.
 
 
 Note: if you have just change some setting in your `.env` file, as the
@@ -70,7 +70,7 @@ repository and pushing it to Heroku git.
 
 1. Clone the Monica repository to your local environment by `git clone
    https://github.com/monicahq/monica.git`.
-1. Add your app's heroku git repository by `heroku git:remote -a (heroku
+1. Add your app’s heroku git repository by `heroku git:remote -a (heroku
    app name)` (this of course requires the [Heroku
    CLI](https://devcenter.heroku.com/articles/heroku-cli).
 1. Push to heroku by `git push heroku master`. Heroku will build and
@@ -97,7 +97,7 @@ The `.vcf` can contain as many contacts as you want.
 ## Importing SQL from the exporter feature
 
 Monica allows you to export your data in SQL, under the Settings panel.
-When you export your data in SQL, you'll get a file called `monica.sql`.
+When you export your data in SQL, you’ll get a file called `monica.sql`.
 
 To import it into your own instance, you need to make sure that the
 database of your instance is completely empty (no tables, no data).
@@ -110,15 +110,15 @@ Then, follow the steps:
 * Finally, sign in with the same credentials as the ones used on
   https://monicahq.com and you are good to go.
 
-There is one caveat with the SQL exporter: you can't get the photos
-you've uploaded for now.
+There is one caveat with the SQL exporter: you can’t get the photos
+you’ve uploaded for now.
 
 ### Importing SQL into Heroku
 
-If you're running your own Monica Heroku instance as mentioned in the
+If you’re running your own Monica Heroku instance as mentioned in the
 [Heroku Installation
 Documentation](https://github.com/monicahq/monica/blob/master/docs/installation/providers/heroku.md),
-you're not actually running your own SQL server, which means that the
+you’re not actually running your own SQL server, which means that the
 solutions above might not be of assistance.
 
 Heroku dynos use a [ClearDB MySQL
@@ -129,39 +129,39 @@ command line tool, you just need to know where to look for the
 credentials.
 
 If you open your app on the Heroku web interface, and click the
-"Settings" tab, you'll have an option to reveal your configuration vars.
-Do so, and look for the `CLEARDB_DATABASE_URL` variable. It's format
+“Settings“ tab, you’ll have an option to reveal your configuration vars.
+Do so, and look for the `CLEARDB_DATABASE_URL` variable. It’s format
 should look like this:
 
 `mysql://<USERNAME>:<PASSWORD>@<HOST>/<DATABASE>?reconnect=true`
 
-Which are the database's `HOST` URL, its name (i.e. `DATABASE`)  and
+Which are the database’s `HOST` URL, its name (i.e. `DATABASE`)  and
 your `USERNAME` and `PASSWORD`.  The `HOST` should be the region where
 the database is located (i.e. `us-cdbr-iron-east-01.cleardb.net`), the
 `DATABASE` should be prepended with `heroku_` (i.e. `heroku_xxxx`) and
 the `USERNAME` and `PASSWORD` should be strings of alphanumeric
 characters.
 
-Now that you have the database's URL and access credentials, you can log
-into the database from your favorite database management tool. If you'd
+Now that you have the database’s URL and access credentials, you can log
+into the database from your favorite database management tool. If you’d
 like to use a command-line tool, here are the step by step instructions
 for debian-based (e.g. Ubuntu) Linux:
 
-#### WARNING: This will delete your current database. Only use on fresh installations, or if you know what you're doing.
+#### WARNING: This will delete your current database. Only use on fresh installations, or if you know what you’re doing.
 
-1. **Update your Monica instance to the same version as the one you're
+1. **Update your Monica instance to the same version as the one you’re
    importing into.** This will prevent nasty SQL mismatches later on.
 2. Download your export file as explained above. Make sure you remember
    the username and password of the instance you **exported from**, as
-   those will be your new sign-in information for the instance you're
+   those will be your new sign-in information for the instance you’re
    **importing into**.
 3. Get `mysql-client` by `sudo apt-get install mysql-client`. Note you
    might need to first add the relevant repository using the
    instructions
    [here](https://downloads.mariadb.org/mariadb/repositories/#mirror=kku)
-   (although don't follow them all the way, or you'll get a full running
-   server on your own machine). If you're going to follow the scripted
-   truncation listed on the steps below, you'll need access to the MySQL
+   (although don’t follow them all the way, or you’ll get a full running
+   server on your own machine). If you’re going to follow the scripted
+   truncation listed on the steps below, you’ll need access to the MySQL
    socket, which is only available if you also installed `mysql-server`.
    You can do so by `sudo apt-get install mysql-server`.
 4. Connect to your database - `mysql --host=<HOST> --user=<USERNAME>
@@ -178,7 +178,7 @@ for debian-based (e.g. Ubuntu) Linux:
     We are indeed using the password on the CLI, so disregard the
     warning.  The `Reading table....` part should only take 10-20
     seconds or so, wait it out. After that you should be prompted by
-    your installation's MySQL database:
+    your installation’s MySQL database:
 
     ```
     Welcome to the MySQL monitor.  Commands end with ; or \g.  Your
@@ -198,8 +198,8 @@ for debian-based (e.g. Ubuntu) Linux:
     mysql>
     ```
 
-5. Take a look around, if you'd like. If you'll enter `SHOW DATABASES`
-   you'll see:
+5. Take a look around, if you’d like. If you’ll enter `SHOW DATABASES`
+   you’ll see:
 
     ```
     Connection id:    195779265
@@ -215,13 +215,13 @@ for debian-based (e.g. Ubuntu) Linux:
 
     ```
 
-    Where `heroku_xxxxxxxxx` is `DATABASE`, your database's name. Note
+    Where `heroku_xxxxxxxxx` is `DATABASE`, your database’s name. Note
     that the `Current database` is your Monica database, `DATABASE`.
 
-    We're now done looking around and you can disconnect from the
+    We’re now done looking around and you can disconnect from the
     database by entering `quit` and hitting the return key.
 
-    **Note:** If at any point the server disconnects, you'll see
+    **Note:** If at any point the server disconnects, you’ll see
     something like this:
 
     ```
@@ -235,7 +235,7 @@ for debian-based (e.g. Ubuntu) Linux:
     This is perfectly fine, and the reason behind the `--reconnect` flag
     you saw earlier.
 
-6. **DANGER: This will delete all the things.** Make sure you're not
+6. **DANGER: This will delete all the things.** Make sure you’re not
    connected to the database anymore (i.e. you entered `quit` and got
    back to your own machine).
 
@@ -274,24 +274,31 @@ for debian-based (e.g. Ubuntu) Linux:
 
     **Notes:**
     * This script performs the table truncations independent of one
-      another, and one by one - on different connections. This is done
+      another, and one by one – on different connections. This is done
       on purpose, to avoid any catastrophic finger-slips on the actual
-      database's MySQL console. If something bad happens, this should
+      database’s MySQL console. If something bad happens, this should
       allow you to kill the terminal in time, or at least `CTRL+C` out
-      of there. If you know what you're doing, then you can just connect
+      of there. If you know what you’re doing, then you can just connect
       to the database and follow [this
       article](https://tableplus.com/blog/2018/08/mysql-how-to-truncate-all-tables.html)
       on how to truncate all the tables with one SQL query.
-    * If you get the following error: ``` ERROR 2002 (HY000): Can't
-      connect to local MySQL server through socket
-      '/var/run/mysqld/mysqld.sock' (2) ``` This probably means you have
-      not installed `mysql-server` as mentioned before. Please do so
-      now, and repeat the process.
-    * The `SET_FOREIGN_KEYS` part above relieves you of facing these
-      type of errors: ``` ERROR 1701 (42000) at line 1: Cannot truncate
-      a table referenced in a foreign key constraint ``` Due to the
-      database's schema. If you do end up seeing those types of errors,
-      please open an issue.
+    * If you get the following error:
+
+        ```
+        ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+        ```
+
+        This probably means you have not installed `mysql-server` as mentioned
+        before. Please do so now, and repeat the process.
+    * The `SET_FOREIGN_KEYS` part above relieves you of facing these type of
+      errors:
+
+        ```
+        ERROR 1701 (42000) at line 1: Cannot truncate a table referenced in a foreign key constraint
+        ```
+
+        Due to the database’s schema.  If you do end up seeing those types of
+        errors, please open an issue.
 
 7. On your own machine (i.e. not on the remote database) import the
    fresh database into your installation (blatantly copied from this [SO
@@ -329,10 +336,10 @@ for debian-based (e.g. Ubuntu) Linux:
     ERROR 1064 (42000) at line 264: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near .....
     ```
 
-    It means that the database schema you're trying to import into does
-    not match the schema of that database you've exported from. This is
+    It means that the database schema you’re trying to import into does
+    not match the schema of that database you’ve exported from. This is
     usually due to a change in the schema between Monica version, and
-    should only happen if you're migrating from an old, unupdated
+    should only happen if you’re migrating from an old, unupdated
     version of Monica to a new version on a new machine. Please file an
     issue if you see this error and we will attempt to assist you.
 
